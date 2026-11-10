@@ -1,0 +1,331 @@
+{
+  "info": {
+    "name": "Tech Challenge - Fase 1",
+    "description": "Colecao de testes para a API de gestao de restaurantes - Tech Challenge Fase 1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api/v1"
+    },
+    {
+      "key": "userId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Cadastro de usuario valido (Cliente)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Joao Silva\",\n  \"email\": \"joao@email.com\",\n  \"login\": \"joaosilva\",\n  \"password\": \"senha123\",\n  \"userType\": \"CUSTOMER\",\n  \"address\": {\n    \"street\": \"Rua das Flores\",\n    \"number\": \"123\",\n    \"city\": \"Sao Paulo\",\n    \"state\": \"SP\",\n    \"zipCode\": \"01001-000\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Cadastro de usuario valido (Dono de Restaurante)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Maria Santos\",\n  \"email\": \"maria@restaurante.com\",\n  \"login\": \"mariasantos\",\n  \"password\": \"senha456\",\n  \"userType\": \"RESTAURANT_OWNER\",\n  \"address\": {\n    \"street\": \"Av. Paulista\",\n    \"number\": \"1000\",\n    \"city\": \"Sao Paulo\",\n    \"state\": \"SP\",\n    \"zipCode\": \"01310-100\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Cadastro invalido - E-mail duplicado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Outro Joao\",\n  \"email\": \"joao@email.com\",\n  \"login\": \"outrojoao\",\n  \"password\": \"senha789\",\n  \"userType\": \"CUSTOMER\",\n  \"address\": {\n    \"street\": \"Rua A\",\n    \"number\": \"1\",\n    \"city\": \"Sao Paulo\",\n    \"state\": \"SP\",\n    \"zipCode\": \"01001-000\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Cadastro invalido - Campos obrigatorios faltando",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"email\": \"\",\n  \"login\": \"\",\n  \"password\": \"\",\n  \"address\": null\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Listar todos os usuarios",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Buscar usuario por ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Buscar usuarios por nome",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/search?name=Joao",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "search"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Joao"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atualizar dados do usuario - Sucesso",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Joao Silva Atualizado\",\n  \"email\": \"joao.novo@email.com\",\n  \"address\": {\n    \"street\": \"Rua Nova\",\n    \"number\": \"456\",\n    \"city\": \"Rio de Janeiro\",\n    \"state\": \"RJ\",\n    \"zipCode\": \"20040-020\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Atualizar dados do usuario - Erro (ID inexistente)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Teste\",\n  \"email\": \"teste@email.com\",\n  \"address\": {\n    \"street\": \"Rua X\",\n    \"number\": \"1\",\n    \"city\": \"SP\",\n    \"state\": \"SP\",\n    \"zipCode\": \"00000-000\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/999",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "999"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Senha",
+      "item": [
+        {
+          "name": "Alterar senha - Sucesso",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"senha123\",\n  \"newPassword\": \"novaSenha456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}/password",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}", "password"]
+            }
+          }
+        },
+        {
+          "name": "Alterar senha - Erro (senha atual incorreta)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"senhaErrada\",\n  \"newPassword\": \"novaSenha789\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}/password",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}", "password"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autenticacao",
+      "item": [
+        {
+          "name": "Login valido",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"joaosilva\",\n  \"password\": \"novaSenha456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login invalido - Senha errada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"joaosilva\",\n  \"password\": \"senhaErrada\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login invalido - Usuario inexistente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"login\": \"naoexiste\",\n  \"password\": \"qualquer\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exclusao",
+      "item": [
+        {
+          "name": "Excluir usuario - Sucesso",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Excluir usuario - Erro (ID inexistente)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/users/999",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "999"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
